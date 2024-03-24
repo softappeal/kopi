@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "1.9.23"
+kotlin = "2.0.0-Beta5"
 kotlinx-coroutines = "1.8.0"
 
 [libraries]

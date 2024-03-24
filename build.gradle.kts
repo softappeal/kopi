@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 import kotlin.io.path.Path
 import kotlin.io.path.forEachDirectoryEntry
@@ -20,11 +21,10 @@ kotlin {
         }
     }
 
-    targets.all {
-        compilations.all {
-            explicitApi()
-            kotlinOptions.allWarningsAsErrors = true
-        }
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        explicitApi()
+        allWarningsAsErrors = true
     }
 
     sourceSets {
