@@ -1,8 +1,11 @@
 @file:Suppress("SpellCheckingInspection", "unused")
 
-package ch.softappeal.kopi.i2c
+package ch.softappeal.kopi.devices
 
+import ch.softappeal.kopi.I2cDevice
 import ch.softappeal.kopi.SuspendCloseable
+import ch.softappeal.kopi.devices.I2cHd44780.Config
+import ch.softappeal.kopi.devices.I2cHd44780.Font
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -54,7 +57,7 @@ private const val LINES_1: UByte = 0x00U
 private const val FONT_5x10: UByte = 0x04U
 private const val FONT_5x8: UByte = 0x00U
 
-public class Hd44780 internal constructor(private val device: I2cDevice, public val config: Config) : SuspendCloseable {
+public class I2cHd44780 internal constructor(private val device: I2cDevice, public val config: Config) : SuspendCloseable {
     public enum class Font { Dots5x8, Dots5x10 }
 
     public class Config(public val lines: Int, public val columns: Int, public val font: Font) {
@@ -196,6 +199,6 @@ public class Hd44780 internal constructor(private val device: I2cDevice, public 
     }
 }
 
-public suspend fun hd44780(device: I2cDevice, config: Hd44780.Config): Hd44780 = Hd44780(device, config).apply { init() }
+public suspend fun i2cHd44780(device: I2cDevice, config: Config): I2cHd44780 = I2cHd44780(device, config).apply { init() }
 
-public suspend fun lcd1602(i2cDevice: I2cDevice): Hd44780 = hd44780(i2cDevice, Hd44780.Config(2, 16, Hd44780.Font.Dots5x8))
+public suspend fun i2cLcd1602(i2cDevice: I2cDevice): I2cHd44780 = i2cHd44780(i2cDevice, Config(2, 16, Font.Dots5x8))

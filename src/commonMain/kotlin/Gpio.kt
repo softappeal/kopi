@@ -1,11 +1,11 @@
-package ch.softappeal.kopi.gpio
+package ch.softappeal.kopi
 
-import ch.softappeal.kopi.Closeable
+import ch.softappeal.kopi.Gpio.Edge
 import kotlin.time.Duration
 
 // https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio-and-the-40-pin-header
 
-public typealias GpioNotification = suspend (edge: Gpio.Edge, nanoSeconds: Long) -> Boolean
+public typealias GpioNotification = suspend (edge: Edge, nanoSeconds: Long) -> Boolean
 
 /**
  * Note: [close] also closes all open inputs/outputs.

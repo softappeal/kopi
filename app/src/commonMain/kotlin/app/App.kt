@@ -1,11 +1,13 @@
 package ch.softappeal.kopi.app
 
-import ch.softappeal.kopi.gpio.Gpio
-import ch.softappeal.kopi.i2c.Gesture
-import ch.softappeal.kopi.i2c.I2cBus
-import ch.softappeal.kopi.i2c.bme280
-import ch.softappeal.kopi.i2c.lcd1602
-import ch.softappeal.kopi.i2c.paj7620U2
+import ch.softappeal.kopi.Gpio
+import ch.softappeal.kopi.Gpio.Bias
+import ch.softappeal.kopi.Gpio.Edge
+import ch.softappeal.kopi.I2cBus
+import ch.softappeal.kopi.devices.Paj7620U2.Gesture
+import ch.softappeal.kopi.devices.bme280
+import ch.softappeal.kopi.devices.i2cLcd1602
+import ch.softappeal.kopi.devices.paj7620U2
 import ch.softappeal.kopi.use
 import io.ktor.server.application.call
 import io.ktor.server.cio.CIO
@@ -28,16 +30,16 @@ private fun runServer() = embeddedServer(CIO, port = 8080) {
 fun main() {
     runBlocking {
         runServer()
-        I2cBus(I2C_BUS).use { i2c ->
-            lcd1602(i2c.device(I2C_ADDRESS_LCD1602)).use { lcd ->
+        I2cBus(I2C_BUS).use { bus ->
+            i2cLcd1602(bus.device(I2C_ADDRESS_LCD1602)).use { lcd ->
                 lcd.clear()
                 lcd.setCursorPosition(1, 0)
                 lcd.displayString("REBOOTED")
-                Gpio().use { chip ->
-                    val paj7620U2 = paj7620U2(i2c.device(I2C_ADDRESS_PAJ7620U2))
-                    val bme280 = bme280(i2c.device(I2C_ADDRESS_BME280))
-                    chip.listen(GPIO_IN_CONNECTED_TO_PAJ7620U2_INT, Gpio.Bias.PullUp, 100.days) { edge, _ ->
-                        if (edge == Gpio.Edge.Falling) {
+                Gpio().use { gpio ->
+                    val paj7620U2 = paj7620U2(bus.device(I2C_ADDRESS_PAJ7620U2))
+                    val bme280 = bme280(bus.device(I2C_ADDRESS_BME280))
+                    gpio.listen(GPIO_IN_CONNECTED_TO_PAJ7620U2_INT, Bias.PullUp, 100.days) { edge, _ ->
+                        if (edge == Edge.Falling) {
                             val gesture = paj7620U2.gesture()
                             val measurements = bme280.measurements()
                             val string = when (gesture) {

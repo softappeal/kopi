@@ -1,8 +1,6 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
-package ch.softappeal.kopi.i2c
-
-import ch.softappeal.kopi.Closeable
+package ch.softappeal.kopi
 
 public interface I2cBus : Closeable {
     public fun device(address: Int): I2cDevice

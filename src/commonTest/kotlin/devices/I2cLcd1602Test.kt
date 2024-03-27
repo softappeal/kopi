@@ -1,18 +1,19 @@
-package ch.softappeal.kopi.i2c
+package ch.softappeal.kopi.devices
 
 import ch.softappeal.kopi.I2C_ADDRESS_LCD1602
 import ch.softappeal.kopi.I2C_BUS
+import ch.softappeal.kopi.I2cBus
 import ch.softappeal.kopi.use
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
-abstract class Lcd1602Test {
+abstract class I2cLcd1602Test {
     @Test
     fun test() = runBlocking {
-        I2cBus(I2C_BUS).use { i2c ->
-            lcd1602(i2c.device(I2C_ADDRESS_LCD1602)).use { lcd ->
+        I2cBus(I2C_BUS).use { bus ->
+            i2cLcd1602(bus.device(I2C_ADDRESS_LCD1602)).use { lcd ->
                 delay(1.seconds)
                 lcd.setBacklight(false)
                 delay(1.seconds)

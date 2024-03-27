@@ -1,4 +1,4 @@
-package ch.softappeal.kopi.i2c
+package ch.softappeal.kopi
 
 public actual fun I2cBus(bus: Int): I2cBus {
     TODO("implement")

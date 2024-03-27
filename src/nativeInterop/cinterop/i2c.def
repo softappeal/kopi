@@ -1,4 +1,4 @@
 headers = i2c/smbus.h linux/i2c-dev.h
-package = ch.softappeal.kopi.i2c.native
+package = ch.softappeal.kopi.native.i2c
 compilerOpts = -Isrc/nativeInterop/cinterop/headers
 linkerOpts = -li2c

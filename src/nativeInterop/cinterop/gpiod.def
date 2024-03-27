@@ -1,4 +1,4 @@
 headers = gpiod.h
-package = ch.softappeal.kopi.gpio.native
+package = ch.softappeal.kopi.native.gpio
 compilerOpts = -Isrc/nativeInterop/cinterop/headers
 linkerOpts = -lgpiod --allow-shlib-undefined

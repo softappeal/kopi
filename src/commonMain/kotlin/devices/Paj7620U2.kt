@@ -1,4 +1,8 @@
-package ch.softappeal.kopi.i2c
+package ch.softappeal.kopi.devices
+
+import ch.softappeal.kopi.I2cCommand
+import ch.softappeal.kopi.I2cDevice
+import ch.softappeal.kopi.write
 
 /*
     Gesture Recognition Sensor
@@ -98,19 +102,19 @@ private val InitCommands = listOf(
     I2cCommand(0x42U, 0x01U),
 )
 
-public enum class Gesture(internal val value: Int) {
-    Up(0x01),
-    Down(0x02),
-    Left(0x04),
-    Right(0x08),
-    Forward(0x10),
-    Backward(0x20),
-    Clockwise(0x40),
-    AntiClockwise(0x80),
-    Wave(0x100),
-}
-
 public class Paj7620U2 internal constructor(private val device: I2cDevice) {
+    public enum class Gesture(internal val value: Int) {
+        Up(0x01),
+        Down(0x02),
+        Left(0x04),
+        Right(0x08),
+        Forward(0x10),
+        Backward(0x20),
+        Clockwise(0x40),
+        AntiClockwise(0x80),
+        Wave(0x100),
+    }
+
     public suspend fun gesture(): Gesture? {
         val gesture = (device.read(0x44U).toInt() shl 8) + device.read(0x43U).toInt()
         return Gesture.entries.firstOrNull { it.value == gesture }

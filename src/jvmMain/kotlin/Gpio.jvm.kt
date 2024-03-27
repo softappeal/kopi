@@ -1,4 +1,4 @@
-package ch.softappeal.kopi.gpio
+package ch.softappeal.kopi
 
 public actual fun Gpio(label: String): Gpio {
     TODO("implement")
