@@ -113,6 +113,7 @@ public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
     }
 
     delay(100.milliseconds) // power on reset
+
     /*
         The LCD may initially be in one of three states.
         The following algorithm ensures that the LCD is in the 8-bit mode.
@@ -160,12 +161,10 @@ public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
                 (if (blink) BLINK_ON else BLINK_OFF)
         )
     }
-
     setDisplayControl()
 
-    val lcd = object : I2cHd44780 {
-        override val config: Config
-            get() = config
+    return object : I2cHd44780 {
+        override val config = config
 
         override suspend fun clear() {
             write4Bit(CLEAR_DISPLAY)
@@ -210,9 +209,7 @@ public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
             backlight = value
             setDisplayControl()
         }
-    }
-    lcd.clear()
-    return lcd
+    }.apply { clear() }
 }
 
 @Suppress("FunctionName")
