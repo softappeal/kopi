@@ -107,11 +107,6 @@ public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
         device.write(data or E_FALSE)
     }
 
-    suspend fun write4Bit(instruction: UByte, dataRegister: Boolean = false) {
-        writeUpper(instruction, dataRegister)
-        writeUpper((instruction.toInt() shl 4).toUByte(), dataRegister)
-    }
-
     delay(100.milliseconds) // power on reset
 
     /*
@@ -139,6 +134,11 @@ public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
     writeUpper(FUNCTION_SET or MODE_8BIT) // we are now guaranteed in 8-bit mode
     writeUpper(FUNCTION_SET or MODE_4BIT) // we are now guaranteed in 4-bit mode
 
+    suspend fun write4Bit(instruction: UByte, dataRegister: Boolean = false) {
+        writeUpper(instruction, dataRegister)
+        writeUpper((instruction.toInt() shl 4).toUByte(), dataRegister)
+    }
+
     write4Bit(
         FUNCTION_SET or
             MODE_4BIT or
@@ -161,6 +161,7 @@ public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
                 (if (blink) BLINK_ON else BLINK_OFF)
         )
     }
+
     setDisplayControl()
 
     return object : I2cHd44780 {
