@@ -92,6 +92,8 @@ public interface I2cHd44780 : SuspendCloseable {
 }
 
 public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
+    delay(100.milliseconds) // power on reset
+
     var blink = false
     var cursor = false
     var on = true
@@ -106,8 +108,6 @@ public suspend fun I2cHd44780(device: I2cDevice, config: Config): I2cHd44780 {
         device.write(data or E_TRUE)
         device.write(data or E_FALSE)
     }
-
-    delay(100.milliseconds) // power on reset
 
     /*
         The LCD may initially be in one of three states.
