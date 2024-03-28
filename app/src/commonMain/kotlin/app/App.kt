@@ -6,7 +6,7 @@ import ch.softappeal.kopi.Gpio.Edge
 import ch.softappeal.kopi.I2cBus
 import ch.softappeal.kopi.devices.Paj7620U2.Gesture
 import ch.softappeal.kopi.devices.Bme280
-import ch.softappeal.kopi.devices.i2cLcd1602
+import ch.softappeal.kopi.devices.I2cLcd1602
 import ch.softappeal.kopi.devices.paj7620U2
 import ch.softappeal.kopi.use
 import io.ktor.server.application.call
@@ -31,7 +31,7 @@ fun main() {
     runBlocking {
         runServer()
         I2cBus(I2C_BUS).use { bus ->
-            i2cLcd1602(bus.device(I2C_ADDRESS_LCD1602)).use { lcd ->
+            I2cLcd1602(bus.device(I2C_ADDRESS_LCD1602)).use { lcd ->
                 lcd.clear()
                 lcd.setCursorPosition(1, 0)
                 lcd.displayString("REBOOTED")

@@ -13,7 +13,7 @@ abstract class I2cLcd1602Test {
     @Test
     fun test() = runBlocking {
         I2cBus(I2C_BUS).use { bus ->
-            i2cLcd1602(bus.device(I2C_ADDRESS_LCD1602)).use { lcd ->
+            I2cLcd1602(bus.device(I2C_ADDRESS_LCD1602)).use { lcd ->
                 delay(1.seconds)
                 lcd.setBacklight(false)
                 delay(1.seconds)
