@@ -47,7 +47,7 @@ public interface Bme280 {
     public suspend fun measurements(): Measurements
 }
 
-public suspend fun bme280(device: I2cDevice): Bme280 {
+public suspend fun Bme280(device: I2cDevice): Bme280 {
     class TemperatureCalib(
         val t1: Double,
         val t2: Double,
